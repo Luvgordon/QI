@@ -1,0 +1,11 @@
+import tushare as ts
+hs = ts.get_hs300s()
+pricechange = 0.0
+for i in hs.code:
+    realtime_quotes= ts.get_realtime_quotes(i)
+    realtime_quotes[['pre_close','open','price']]=realtime_quotes[['pre_close','open','price']].astype(float)
+    pricechange=(realtime_quotes.price - realtime_quotes.pre_close) / realtime_quotes.pre_close * 100
+    #print(pricechange[0])
+    if(pricechange[0] <= -3.0 and pricechange[0] >= -9.0):
+        #print("Time to BUY,name:%s,code:%s"%(realtime_quotes.name,realtime_quotes.code))
+        print(realtime_quotes.name)
